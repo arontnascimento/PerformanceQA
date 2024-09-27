@@ -101,7 +101,6 @@
         <boolProp name="stopThread">false</boolProp>
         <stringProp name="variableNames">fromPort,toPort</stringProp>
       </CSVDataSet>
-      <hashTree/>
       <hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="01_Home" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
