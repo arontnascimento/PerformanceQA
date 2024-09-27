@@ -50,5 +50,3 @@ jobs:
             jmeter_results_summary.html
           if-no-files-found: ignore
           retention-days: 2
-
-          retention-days: 2
