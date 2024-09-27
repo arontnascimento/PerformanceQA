@@ -4,6 +4,7 @@
 
 - Instalar o java JRE de acordo com o que é esperado para a versão do jmeter escolhida
 - Instalar o jmeter 5.5 ou superior
+- Para executar o teste de pico, é necessário incluir o pacote jmeter-plugins-manager-1.10.jar no diretório /lib/ext do jmeter e posteriormente instalar o "Ultimate Thread Group"
 - Realizar o clone do repositório
 
 
