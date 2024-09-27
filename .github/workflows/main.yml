@@ -27,6 +27,12 @@ jobs:
           tar -xzf apache-jmeter-5.5.tgz
           cd ..
 
+      - name: Install Ultimate Thread Group Plugin
+        run: |
+          mkdir -p jmeter/apache-jmeter-5.5/lib/ext
+          wget -P jmeter/apache-jmeter-5.5/lib/ext https://repo1.maven.org/maven2/kg/apc/jmeter/ultimate-thread-group/3.4.0/ultimate-thread-group-3.4.0.jar
+
+
       - name: Install Pandoc
         run: |
           sudo apt-get update
