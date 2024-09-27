@@ -27,6 +27,11 @@ jobs:
           tar -xzf apache-jmeter-5.5.tgz
           cd ..
 
+      - name: Install JMeter Plugins Manager
+        run: |
+          mkdir -p jmeter/apache-jmeter-5.5/lib/ext
+          wget -P jmeter/apache-jmeter-5.5/lib/ext https://jmeter-plugins.org/files/packages/jmeter-plugins-manager-1.10.jar
+
       - name: Install Pandoc
         run: |
           sudo apt-get update
@@ -41,7 +46,8 @@ jobs:
       
       - name: Execute JMX Script and Generate HTML Report
         run: |
-          ./jmeter/apache-jmeter-5.5/bin/jmeter -n -t 'SCRIPT_DesafioPerformance_Pico.jmx' -l report.csv -e -o html_report/
+          ./jmeter/apache-jmeter-5.5/bin/jmeter -n -t 'SCRIPT_DesafioPerformance_Pico.jmx' -l report.csv -e -o html_report/ -Jplugins.manager.install.ultimate-thread-group=true
+
 
       - name: List all files
         run: ls -la
