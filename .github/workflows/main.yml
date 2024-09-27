@@ -3,31 +3,6 @@ name: Execute JMX Script and Generate HTML Report
 on:
   push:
     branches:
-      - main  # or the branch you want to monitor
-
-jobs:
-  execute:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Docker
-        run: docker pull justb4/jmeter:5.5  # Imagem Docker com JMeter
-
-      - name: Run JMeter in Docker
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/tests \
-            justb4/jmeter:5.5 \
-            -n -t /tests/SCRIPT_DesafioPerformance_Carga_v1.jmx -l /tests/report.jtl -e -o /tests/html_report/
-
-      name: Execute JMX Script and Generate HTML Report
-
-on:
-  push:
-    branches:
       - main
 
 jobs:
