@@ -30,7 +30,7 @@ jobs:
       - name: Install JMeter Plugins Manager
         run: |
           mkdir -p jmeter/apache-jmeter-5.5/lib/ext
-          wget -P jmeter/apache-jmeter-5.5/lib/ext https://jmeter-plugins.org/files/packages/jmeter-plugins-manager-1.10.jar
+          wget -P jmeter/apache-jmeter-5.5/lib/ext https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.10/jmeter-plugins-manager-1.10.jar
 
       - name: Install Pandoc
         run: |
