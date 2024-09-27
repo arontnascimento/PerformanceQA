@@ -11,4 +11,6 @@
 
 - Navegue para o diretório onde o repositório foi clonado
 - Verifique a necessidade de alterar as configurações do script ( requisições, usuários, duração do teste, etc )
-- Comando para execução (**)jmeter -n -t SCRIPT_DesafioPerformance_Carga_v1.jmx -l report.jtl -o html_report
+- Comando para execução **jmeter -n -t SCRIPT_DesafioPerformance_Carga_v1.jmx -l report.jtl -o html_report**
+
+
