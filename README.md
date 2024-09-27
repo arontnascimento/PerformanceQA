@@ -21,6 +21,6 @@
 
 ## Informações adicionais
 
-- O projeto possui uma pipeline que é acionada ao realizar um push na branch main
-- O teste írá rodar em um container e o relatório será disponibilizado.
+- O projeto possui uma **pipeline** que é acionada ao realizar um push na branch main
+- O teste írá rodar em um **container** e o relatório será disponibilizado.
 - Para acessar o relatório, vá até **Actions**, clique na execução mais recente e posteriormente verifique o relatório que está em **Artifacts**
