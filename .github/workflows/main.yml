@@ -1,0 +1,91 @@
+name: Execute JMX Script and Generate HTML Report
+
+on:
+  push:
+    branches:
+      - main  # or the branch you want to monitor
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'  # or the required Java version for JMeter
+          distribution: 'adopt'
+
+      - name: Download Apache JMeter
+        run: |
+          mkdir jmeter
+          cd jmeter
+          wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz
+          tar -xzf apache-jmeter-5.5.tgz
+          cd ..
+
+      - name: Install JMeter Plugins Manager
+        run: |
+          mkdir -p jmeter/apache-jmeter-5.5/lib/ext
+          wget -P jmeter/apache-jmeter-5.5/lib/ext https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.10/jmeter-plugins-manager-1.10.jar
+
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Pull Latest Changes
+        run: |
+          git pull origin main
+          
+      - name: List Files After Pull
+        run: ls -la
+      
+      - name: Execute JMX Script and Generate HTML Report
+        run: |
+          ./jmeter/apache-jmeter-5.5/bin/jmeter -n -t 'SCRIPT_DesafioPerformance_Pico.jmx' -l report.csv -e -o html_report/ -Jplugins.manager.install.ultimate-thread-group=true
+
+
+      - name: List all files
+        run: ls -la
+
+      - name: Convert JMeter results to Markdown
+        id: create-summary
+        run: |
+          input_file="report.csv"
+          output_file="jmeter_results_summary.md"
+          
+          total_samples=$(awk -F',' 'NR > 1 {sum += $2} END {print sum}' "$input_file")
+          total_errors=$(awk -F',' 'NR > 1 {sum += $9} END {print sum}' "$input_file")
+          error_percentage=$(awk "BEGIN {print ($total_errors/$total_samples)*100}")
+
+          echo "# JMeter Test Summary" > "$output_file"
+          echo "Total Samples: $total_samples" >> "$output_file"
+          echo "Total Errors: $total_errors" >> "$output_file"
+          echo "Error Percentage: $error_percentage%" >> "$output_file"
+
+      - name: Convert Markdown to HTML
+        run: pandoc -f markdown -t html jmeter_results_summary.md -o jmeter_results_summary.html
+
+      - name: Show summary
+        run: |
+          echo "## Sumário Markdown gerado:"
+          cat jmeter_results_summary.md
+          echo "## Sumário HTML gerado:"
+          cat jmeter_results_summary.html
+          
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jmeter-results
+          path: |
+            html_report/
+            report.csv
+            jmeter_results_summary.md
+            jmeter_results_summary.html
+          if-no-files-found: ignore
+          retention-days: 2
