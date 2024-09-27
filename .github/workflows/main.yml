@@ -27,21 +27,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc
-
-      - name: Pull Latest Changes
-        run: |
-          git pull origin main
           
-      - name: List Files After Pull
-        run: ls -la
-      
-      - name: Execute JMX Script and Generate HTML Report
-        run: |
-          ./jmeter/apache-jmeter-5.5/bin/jmeter -n -t 'SCRIPT_DesafioPerformance_Carga_v1.jmx' -l report.csv -e -o html_report/ -Jplugins.manager.install.ultimate-thread-group=true
-
-
-      - name: List all files
-        run: ls -la
 
       - name: Convert JMeter results to Markdown
         id: create-summary
